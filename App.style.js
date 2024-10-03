@@ -7,14 +7,11 @@ export const s = StyleSheet.create({
     },
     header: {
         flex: 1,
-        backgroundColor: "red"
     },
     body: {
         flex: 5,
-        backgroundColor: "blue"
     },
     footer: {
-        flex: 1,
-        backgroundColor: "green"
+        height: 70,
     },
 });
