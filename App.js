@@ -1,13 +1,13 @@
-import { Alert, ScrollView, Text, View, } from "react-native";
-import {SafeAreaProvider, SafeAreaView} from "react-native-safe-area-context"
+import { Alert, ScrollView, Text, View } from "react-native";
+import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { s } from "./App.style";
 import { Header } from "./components/Header/Header";
 import { CardTodo } from "./components/CardTodo/CardTodo";
-import {useState, useEffect } from "react";
+import { useEffect, useState } from "react";
 import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
 import { ButtonAdd } from "./components/ButtonAdd/ButtonAdd";
-import Dialog from "react-native-dialog"
-import uuid from 'react-native-uuid';
+import Dialog from "react-native-dialog";
+import uuid from "react-native-uuid";
 
 export default function App() {
   const [todoList, setTodoList] = useState([]);

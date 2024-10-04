@@ -1,8 +1,8 @@
 import { Text, TouchableOpacity } from "react-native";
-import { s } from "./ButtonAd.style";
-export function ButtonAdd({OnPress}){
+import { s } from "./ButtonAdd.style";
+export function ButtonAdd({onPress}){
     return (
-    <TouchableOpacity OnPress={OnPress} style={s.btn}>
+    <TouchableOpacity onPress={onPress} style={s.btn}>
       <Text style={s.txt}>+ New todo</Text>
     </TouchableOpacity>
     );
