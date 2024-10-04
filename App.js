@@ -18,44 +18,46 @@ export default function App() {
     { id : 8, title:"Go to the dentist", isCompleted:false},
     { id : 9, title: "Learn React Native", isCompleted:false}
   ]);
+  const [selectedTabName, setSelectedTabName] = useState("inProgress")
 
-  function renderTodoList(){
-    return todoList.map((todo)=> (
-    <View key={todo.id} style={s.cardItem}>
-      <CardTodo onPress={updateTodo} todo={todo}/>
-    </View>
+  function renderTodoList() {
+    return todoList.map((todo) => (
+      <View key={todo.id} style={s.cardItem}>
+        <CardTodo onPress={updateTodo} todo={todo} />
+      </View>
     ));
   }
 
-  function updateTodo(todo){
-    const updateTodo = {
-      ...todo, 
+  function updateTodo(todo) {
+    const updatedTodo = {
+      ...todo,
       isCompleted: !todo.isCompleted,
     };
-    const updateTodoList = [...todoList];
-    const indexToUpdate = updateTodoList.findIndex(
-      (t) => t.id === updateTodo.id
+    const updatedTodoList = [...todoList];
+    const indexToUpdate = updatedTodoList.findIndex(
+      (t) => t.id === updatedTodo.id
     );
-    updateTodoList[indexToUpdate] = updateTodo;
-    setTodoList(updateTodoList);
+    updatedTodoList[indexToUpdate] = updatedTodo;
+    setTodoList(updatedTodoList);
   }
   return (
     <>
-  <SafeAreaProvider>
-    <SafeAreaView style={s.app}>
-      <View style={s.header}>
-        <Header />
-      </View>
-      <View style={s.body}>
-        <ScrollView>
-        {renderTodoList()}
-        </ScrollView>
-      </View>
-    </SafeAreaView>
-  </SafeAreaProvider>
-      <View style={s.footer}>
-        <TabBottomMenu/>
-      </View>
-      </>
+    <SafeAreaProvider>
+      <SafeAreaView style={s.app}>
+        <View style={s.header}>
+          <Header />
+        </View>
+        <View style={s.body}>
+          <ScrollView>{renderTodoList()}</ScrollView>
+        </View>
+      </SafeAreaView>
+    </SafeAreaProvider>
+    <View style={s.footer}>
+      <TabBottomMenu
+        onPress={setSelectedTabName}
+        selectedTabName={selectedTabName}
+      />
+    </View>
+  </>
   );
 }
