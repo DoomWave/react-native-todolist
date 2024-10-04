@@ -4,11 +4,13 @@ export function TabBottomMenu({ selectedTabName, onPress, todoList }) {
     const countByStatus = todoList.reduce((acc, todo) => {
         todo.isCompleted ? acc.done++: acc.inProgress++
         return acc;
-    }, {
+    }, 
+    {
         all: todoList.length, 
         inProgress: 0, 
         done: 0, 
-    });
+    }
+    );
     console.log(countByStatus)
   function getTextStyle(tabName) {
     return {

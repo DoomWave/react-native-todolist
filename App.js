@@ -18,8 +18,18 @@ export default function App() {
     { id : 8, title:"Go to the dentist", isCompleted:false},
     { id : 9, title: "Learn React Native", isCompleted:false}
   ]);
-  const [selectedTabName, setSelectedTabName] = useState("inProgress")
+  const [selectedTabName, setSelectedTabName] = useState("all")
 
+function getFilteredList(){
+    switch(selectedTabName){
+      case "all":
+        return todoList
+      case "inProgress":
+        return todoList.filter((todo)=> !todo.isCompleted);
+      case "done":
+        return todoList.filter((todo)=> todo.isCompleted);
+    }
+  }
   function renderTodoList() {
     return todoList.map((todo) => (
       <View key={todo.id} style={s.cardItem}>
