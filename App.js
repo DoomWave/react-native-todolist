@@ -12,16 +12,32 @@ export default function App() {
     { id : 3, title: "Learn React Native", isCompleted:false},
     { id : 4, title: "walk the dog", isCompleted:true},
     { id : 5, title:"Go to the dentist", isCompleted:false},
-    { id : 6, title: "Learn React Native", isCompleted:false}
+    { id : 6, title: "Learn React Native", isCompleted:false},
+    { id : 7, title: "walk the dog", isCompleted:true},
+    { id : 8, title:"Go to the dentist", isCompleted:false},
+    { id : 9, title: "Learn React Native", isCompleted:false}
   ]);
 
   function renderTodoList(){
     return todoList.map((todo)=> (
     <View key={todo.id} style={s.cardItem}>
-      <CardTodo todo={todo}/>
+      <CardTodo onPress={updateTodo} todo={todo}/>
     </View>
     ));
-  };
+  }
+
+  function updateTodo(todo){
+    const updateTodo = {
+      ...todo, 
+      isCompleted: !todo.isCompleted,
+    };
+    const updateTodoList = [...todoList];
+    const indexToUpdate = updateTodoList.findIndex(
+      (t) => t.id === updateTodo.id
+    );
+    updateTodoList[indexToUpdate] = updateTodo;
+    setTodoList(updateTodoList);
+  }
   return (
     <>
   <SafeAreaProvider>
