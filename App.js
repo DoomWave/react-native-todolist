@@ -31,7 +31,7 @@ function getFilteredList(){
     }
   }
   function renderTodoList() {
-    return todoList.map((todo) => (
+    return getFilteredList().map((todo) => (
       <View key={todo.id} style={s.cardItem}>
         <CardTodo onPress={updateTodo} todo={todo} />
       </View>
