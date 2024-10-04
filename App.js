@@ -5,19 +5,10 @@ import { Header } from "./components/Header/Header";
 import { CardTodo } from "./components/CardTodo/CardTodo";
 import {useState } from "react";
 import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
+import { ButtonAdd } from "./components/ButtonAdd/ButtonAdd";
 
 export default function App() {
-  const [todoList, setTodoList] = useState([
-    { id : 1, title: "walk the dog", isCompleted:true},
-    { id : 2, title:"Go to the dentist", isCompleted:false},
-    { id : 3, title: "Learn React Native", isCompleted:false},
-    { id : 4, title: "walk the dog", isCompleted:true},
-    { id : 5, title:"Go to the dentist", isCompleted:false},
-    { id : 6, title: "Learn React Native", isCompleted:false},
-    { id : 7, title: "walk the dog", isCompleted:true},
-    { id : 8, title:"Go to the dentist", isCompleted:false},
-    { id : 9, title: "Learn React Native", isCompleted:false}
-  ]);
+  const [todoList, setTodoList] = useState([]);
   const [selectedTabName, setSelectedTabName] = useState("all")
 
 function getFilteredList(){
@@ -76,6 +67,7 @@ function getFilteredList(){
         <View style={s.body}>
           <ScrollView>{renderTodoList()}</ScrollView>
         </View>
+        <ButtonAdd />
       </SafeAreaView>
     </SafeAreaProvider>
     <View style={s.footer}>
