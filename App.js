@@ -54,6 +54,7 @@ export default function App() {
     </SafeAreaProvider>
     <View style={s.footer}>
       <TabBottomMenu
+        todoList={todoList}
         onPress={setSelectedTabName}
         selectedTabName={selectedTabName}
       />
