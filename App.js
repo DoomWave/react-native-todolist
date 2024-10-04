@@ -19,7 +19,7 @@ export default function App() {
         <Header />
       </View>
       <View style={s.body}>
-        <CardTodo todo={TODO_LIST[0]}/>
+        <CardTodo todo={TODO_LIST[1]}/>
       </View>
     </SafeAreaView>
   </SafeAreaProvider>
