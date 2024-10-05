@@ -8,13 +8,25 @@ import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
 import { ButtonAdd } from "./components/ButtonAdd/ButtonAdd";
 import Dialog from "react-native-dialog";
 import uuid from "react-native-uuid";
-
+import AsyncStorage from "@react-native-async-storage/async-storage";
 export default function App() {
   const [todoList, setTodoList] = useState([]);
   const [selectedTabName, setSelectedTabName] = useState("all");
   const [isAddDialogDisplayed, setIsAddDialogDisplayed] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
+  async function loadTodoList(){
+    console.log('Load')
+  }
+
+  async function saveTodoList(){
+    console.log('Save')
+    try{
+      await AsyncStorage.setItem("@todoList", todoList)
+    }catch(err){
+
+    }
+  }
   function getFilteredList() {
     switch (selectedTabName) {
       case "all":
