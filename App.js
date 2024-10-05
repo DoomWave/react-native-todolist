@@ -11,6 +11,7 @@ import uuid from "react-native-uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 
 let isFirstRender = true;
+let isLoadUpdate = false;
 export default function App() {
   const [todoList, setTodoList] = useState([]);
   const [selectedTabName, setSelectedTabName] = useState("all");
@@ -22,11 +23,15 @@ export default function App() {
   }, []);
   
   useEffect(()=>{
+    if(!isLoadUpdate){
     if(!isFirstRender){
       saveTodoList();
     }else{  
       isFirstRender = false
     }
+  } else {
+    isLoadUpdate = false;
+  }
   },[todoList]);
 
   async function loadTodoList(){
@@ -34,6 +39,7 @@ export default function App() {
     try{
       const todoListString = await AsyncStorage.getItem("@todoList");
       const parsedTodoList = JSON.parse(todoListString);
+      isLoadUpdate = true;
       setTodoList(parsedTodoList);
     }catch(err){
       alert("err");
