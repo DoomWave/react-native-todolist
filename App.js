@@ -9,22 +9,43 @@ import { ButtonAdd } from "./components/ButtonAdd/ButtonAdd";
 import Dialog from "react-native-dialog";
 import uuid from "react-native-uuid";
 import AsyncStorage from "@react-native-async-storage/async-storage";
+
+let isFirstRender = true;
 export default function App() {
   const [todoList, setTodoList] = useState([]);
   const [selectedTabName, setSelectedTabName] = useState("all");
   const [isAddDialogDisplayed, setIsAddDialogDisplayed] = useState(false);
   const [inputValue, setInputValue] = useState("");
 
+  useEffect(()=>{
+    loadTodoList();
+  }, []);
+  
+  useEffect(()=>{
+    if(!isFirstRender){
+      saveTodoList();
+    }else{  
+      isFirstRender = false
+    }
+  },[todoList]);
+
   async function loadTodoList(){
     console.log('Load')
+    try{
+      const todoListString = await AsyncStorage.getItem("@todoList");
+      const parsedTodoList = JSON.parse(todoListString);
+      setTodoList(parsedTodoList);
+    }catch(err){
+      alert("err");
+    }
   }
 
   async function saveTodoList(){
     console.log('Save')
     try{
-      await AsyncStorage.setItem("@todoList", todoList)
+      await AsyncStorage.setItem("@todoList", JSON.stringify(todoList))
     }catch(err){
-
+      alert("err");
     }
   }
   function getFilteredList() {
