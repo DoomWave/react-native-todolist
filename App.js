@@ -3,7 +3,7 @@ import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { s } from "./App.style";
 import { Header } from "./components/Header/Header";
 import { CardTodo } from "./components/CardTodo/CardTodo";
-import { useEffect, useState } from "react";
+import { useEffect, useState, useRef } from "react";
 import { TabBottomMenu } from "./components/TabBottomMenu/TabBottomMenu";
 import { ButtonAdd } from "./components/ButtonAdd/ButtonAdd";
 import Dialog from "react-native-dialog";
@@ -18,40 +18,41 @@ export default function App() {
   const [selectedTabName, setSelectedTabName] = useState("all");
   const [isAddDialogDisplayed, setIsAddDialogDisplayed] = useState(false);
   const [inputValue, setInputValue] = useState("");
+  const ScrollViewRef = useRef();
 
-  useEffect(() => {
+  useEffect(()=>{
     loadTodoList();
   }, []);
-
-  useEffect(() => {
-    if (!isLoadUpdate) {
-      if (!isFirstRender) {
-        saveTodoList();
-      } else {
-        isFirstRender = false;
-      }
-    } else {
-      isLoadUpdate = false;
+  
+  useEffect(()=>{
+    if(!isLoadUpdate){
+    if(!isFirstRender){
+      saveTodoList();
+    }else{  
+      isFirstRender = false
     }
-  }, [todoList]);
+  } else {
+    isLoadUpdate = false;
+  }
+  },[todoList]);
 
-  async function loadTodoList() {
-    console.log("LOAD");
-    try {
+  async function loadTodoList(){
+    console.log('Load')
+    try{
       const todoListString = await AsyncStorage.getItem("@todoList");
       const parsedTodoList = JSON.parse(todoListString);
       isLoadUpdate = true;
-      setTodoList(parsedTodoList);
-    } catch (err) {
+      setTodoList(parsedTodoList || []);
+    }catch(err){
       alert(err);
     }
   }
 
-  async function saveTodoList() {
-    console.log("SAVE");
-    try {
-      await AsyncStorage.setItem("@todoList", JSON.stringify(todoList));
-    } catch (err) {
+  async function saveTodoList(){
+    console.log('Save')
+    try{
+      await AsyncStorage.setItem("@todoList", JSON.stringify(todoList))
+    }catch(err){
       alert(err);
     }
   }
@@ -64,6 +65,7 @@ export default function App() {
       case "done":
         return todoList.filter((todo) => todo.isCompleted);
     }
+    return [];
   }
 
   function deleteTodo(todoToDelete) {
@@ -109,6 +111,9 @@ export default function App() {
     setTodoList([...todoList, newTodo]);
     setIsAddDialogDisplayed(false);
     setInputValue("");
+    setTimeout(()=>{
+      ScrollViewRef.current.scrollToEnd()
+    }, 300)
   }
 
   function renderAddDialog() {
@@ -145,7 +150,7 @@ export default function App() {
             <Header />
           </View>
           <View style={s.body}>
-            <ScrollView>{renderTodoList()}</ScrollView>
+            <ScrollView ref={ScrollViewRef}>{renderTodoList()}</ScrollView>
           </View>
           <ButtonAdd onPress={() => setIsAddDialogDisplayed(true)} />
         </SafeAreaView>
